@@ -1,3 +1,4 @@
+import os
 import random
 import discord
 
@@ -33,13 +34,34 @@ UNSEI_U = "亲，今天已经抽过签了呢。"
 TOUSAKI_BENE = "投祥成功！"
 TOUSAKI_MALE = "亲，今天已经投过祥了呢。祝你幸福。"
 
-UNSEI = {UNSEI_0, UNSEI_1, UNSEI_2, UNSEI_3, UNSEI_U}
+UNSEI = {UNSEI_0, UNSEI_1, UNSEI_2, UNSEI_3}
 
 class Staff:
     local_dir = ""
 
-    def tousaki(userID):
-        return False
+    def __init__(self, dir):
+        self.local_dir = dir
+        #投不投祥？
+        if os.path.isfile(self.local_dir + "tousaki.saki") == False:
+            f = open(self.local_dir + "tousaki.saki", "x")
+            f.close()
+        #每日算命
+        if os.path.isfile(self.local_dir + "unsei.saki") == False:
+            f = open(self.local_dir + "unsei.saki", "x")
+            f.close()
+
+    def tousaki(self, user):
+        with open(self.local_dir + "tousaki.saki", "a+") as t:
+            if user.id in t.readlines():
+              return TOUSAKI_MALE
+            else:
+                t.write(user.id + "\n")
+        return TOUSAKI_BENE
     
-    def unsei(userID):
-        return False
+    def unsei(self, user):
+        with open(self.local_dir + "unsei.saki", "a+") as t:
+            if user.id in t.readlines():
+              return UNSEI_U
+            else:
+                t.write(user.id + "\n")
+        return random.choice(UNSEI)
