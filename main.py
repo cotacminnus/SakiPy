@@ -4,7 +4,7 @@ import discord
 intents = discord.Intents.default()
 intents.message_content = True
 
-Sakiko = discord.Sakiko(intents=intents)
+Sakiko = discord.Client(intents=intents)
 
 @Sakiko.event
 async def on_ready():
