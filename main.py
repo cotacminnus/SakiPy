@@ -16,14 +16,14 @@ gmt = pytz.timezone("UTC")
 #Saki = saki.Staff(os.getenv("LOCDIR", "local/"))   do for .env setup
 
 #read json
-with open("config/config.json", "r") as f:
+with open("config/config.json", "r") as f:  #json setup
     content = f.read()
     cfg = json.loads(content)
     token = cfg["token"]
     loc_dir = cfg["locdir"]
     gmt = pytz.timezone(cfg["gmt"])
 
-Saki = saki.Staff(loc_dir)    #do for json setup
+Saki = saki.Staff(loc_dir)
 
 intents = discord.Intents.default()
 intents.message_content = True
